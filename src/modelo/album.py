@@ -5,6 +5,14 @@ from sqlalchemy.orm import relationship
 
 from .declarative_base import Base
 
+from .declarative_base import Base
+from .declarative_base import Base
+
+
+class Medio(enum.Enum):
+    DISCO = 1
+    CASETE = 2
+    CD = 3
 
 class Medio(enum.Enum):
     DISCO = 1
