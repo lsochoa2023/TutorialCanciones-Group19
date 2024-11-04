@@ -225,10 +225,68 @@ class Ventana_Cancion(QWidget):
         # Esta función nos permite mostrar los resultados compactados hacia arriba
         self.caja_interpretes.layout().setRowStretch(fila + 2, 1)
 
+    def mostrar_error(self, titulo, mensaje):
+        """
+        Muestra un mensaje de error en un cuadro de diálogo.
+        """
+        mensaje_error = QMessageBox()
+        mensaje_error.setIcon(QMessageBox.Critical)
+        mensaje_error.setWindowTitle(titulo)
+        mensaje_error.setText(mensaje)
+        mensaje_error.setStandardButtons(QMessageBox.Ok)
+        mensaje_error.exec_()
+
     def guardar_cancion(self):
         """
         Función para guardar los cambios en una canción
         """
+
+        # Validación de intérpretes
+        if not self.interpretes:
+            self.mostrar_error("Error al guardar canción", "La canción debe tener al menos un intérprete")
+            return
+
+        # Recoger información de la canción
+        cancion_data = {
+            "titulo": self.texto_cancion.text(),
+            "minutos": self.texto_minutos.text(),
+            "segundos": self.texto_segundos.text(),
+            "compositor": self.texto_compositor.text(),
+        }
+
+        if self.cancion_actual is None:
+            # Crear nueva canción
+            self.interfaz.crear_cancion(cancion_data, self.interpretes, id_album=self.id_album)
+        else:
+            # Actualizar canción existente
+            for id in self.interpretes_a_eliminar:
+                if id != "n":
+                    self.interfaz.eliminar_interprete(id)
+            self.interpretes_a_eliminar = []
+
+            self.cancion_actual.update(cancion_data)
+
+            # Validaciones de campos
+            if any(field == "" for field in cancion_data.values()):
+                self.mostrar_error("Error al guardar canción", "Ningún campo debe estar vacío")
+                return
+
+            minutos = int(self.cancion_actual["minutos"])
+            segundos = int(self.cancion_actual["segundos"])
+
+            if minutos == 0 and segundos < 10:
+                self.mostrar_error("Error al guardar canción", "La duración de la canción debe ser mínimo de 10 sg")
+                return
+            
+            # Guardar cambios en la canción
+            self.interfaz.guardar_cancion(self.cancion_actual, self.interpretes)
+
+        # Manejo de la vista del álbum
+        if self.id_album != -1:
+            self.hide()
+            self.interfaz.mostrar_ventana_album(self.id_album)
+            self.id_album = -1
+    """def guardar_cancion(self):      
 
         # Si no hay intérpretes, se lanza un mensaje de error.
         if len(self.interpretes) == 0:
@@ -292,7 +350,7 @@ class Ventana_Cancion(QWidget):
                 self.hide()
                 self.interfaz.mostrar_ventana_album(self.id_album)
                 self.id_album = -1
-
+"""
     def eliminar_interprete(self, n_interprete):
         """
         Método para eliminar intérpretes de la ventana
