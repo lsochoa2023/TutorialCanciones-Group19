@@ -5,6 +5,7 @@ from src.vista.vista_cancion import Ventana_Cancion
 from src.vista.vista_lista_album import Ventana_Lista_Album
 from src.vista.vista_lista_cancion import Ventana_Lista_Canciones
 
+ERROR_GUARDAR_CANCION = "Error al guardar canción"
 
 class App(QApplication):
     """
@@ -180,7 +181,7 @@ class App(QApplication):
         ):
             mensaje_error = QMessageBox()
             mensaje_error.setIcon(QMessageBox.Critical)
-            mensaje_error.setWindowTitle("Error al guardar canción")
+            mensaje_error.setWindowTitle(ERROR_GUARDAR_CANCION)            
             mensaje_error.setText("Ningún campo debe estar vacio")
             mensaje_error.setStandardButtons(QMessageBox.Ok)
             mensaje_error.exec_()
@@ -217,9 +218,10 @@ class App(QApplication):
                         interpretes,
                     )
                     if operacion is False:
+                        ERROR_GUARDAR_CANCION = "Error al guardar canción"
                         mensaje_error = QMessageBox()
                         mensaje_error.setIcon(QMessageBox.Critical)
-                        mensaje_error.setWindowTitle("Error al guardar canción")
+                        mensaje_error.setWindowTitle(ERROR_GUARDAR_CANCION)
                         mensaje_error.setText(
                             "Ya existe una canción con el título "
                             + nueva_cancion["titulo"]
@@ -234,9 +236,10 @@ class App(QApplication):
         """
         albumes = self.logica.buscar_albumes_por_titulo(nombre_album)
         if len(albumes) == 0:
+            ERROR_GUARDAR_CANCION = "Error al buscar álbum"
             mensaje_error = QMessageBox()
             mensaje_error.setIcon(QMessageBox.Critical)
-            mensaje_error.setWindowTitle("Error al buscar álbum")
+            mensaje_error.setWindowTitle(ERROR_GUARDAR_CANCION)
             mensaje_error.setText("No hay álbumes con el título " + nombre_album)
             mensaje_error.setStandardButtons(QMessageBox.Ok)
             mensaje_error.exec_()
