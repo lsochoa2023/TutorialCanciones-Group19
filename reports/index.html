@@ -436,7 +436,9 @@ Licensed under the MIT license.
 		// Determine whether this text already exists at this position.
 		// If so, mark it for inclusion in the next render pass.
 
-		for (var i = 0, position; position = positions[i]; i++) {
+		for (var i = 0; i < positions.length; i++) {
+            var position = positions[i];
+        
 			if (position.x == x && position.y == y) {
 				position.active = true;
 				return;
@@ -488,32 +490,32 @@ Licensed under the MIT license.
 	//     Angle is currently unused, it will be implemented in the future.
 
 	Canvas.prototype.removeText = function(layer, x, y, text, font, angle) {
-		if (text == null) {
-			var layerCache = this._textCache[layer];
-			if (layerCache != null) {
-				for (var styleKey in layerCache) {
-					if (hasOwnProperty.call(layerCache, styleKey)) {
-						var styleCache = layerCache[styleKey];
-						for (var key in styleCache) {
-							if (hasOwnProperty.call(styleCache, key)) {
-								var positions = styleCache[key].positions;
-								for (var i = 0, position; position = positions[i]; i++) {
-									position.active = false;
-								}
-							}
+        if (text == null) {
+                    var layerCache = this._textCache[layer];
+                if (layerCache != null) {    
+        for (var styleKey in layerCache) {
+            if (hasOwnProperty.call(layerCache, styleKey)) {
+                var styleCache = layerCache[styleKey];
+                        for (var key in styleCache) {
+            if (hasOwnProperty.call(styleCache, key)) {
+                var positions = styleCache[key].positions;
+                        for (var i = 0, position; position = positions[i]; i++) {
+            position.active = false;
+        }
+    }
 						}
 					}
 				}
 			}
 		} else {
-			var positions = this.getTextInfo(layer, text, font, angle).positions;
-			for (var i = 0, position; position = positions[i]; i++) {
-				if (position.x == x && position.y == y) {
-					position.active = false;
-				}
-			}
-		}
-	};
+        var positions = this.getTextInfo(layer, text, font, angle).positions;
+                for (var i = 0, position; position = positions[i]; i++) {
+            if (position.x == x && position.y == y) {
+                position.active = false;
+}
+            }
+        }
+    };
 
 	///////////////////////////////////////////////////////////////////////////
 	// The top-level container for the entire plot.
@@ -713,14 +715,16 @@ Licensed under the MIT license.
 
         // public attributes
         plot.hooks = hooks;
+
         // initialize
-        initPlugins();
+        initPlugins(plot);
         parseOptions(options_);
         setupCanvases();
         setData(data_);
         setupGrid();
         draw();
         bindEvents();
+
 
         function executeHooks(hook, args) {
             args = [plot].concat(args);
