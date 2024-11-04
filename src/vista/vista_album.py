@@ -16,7 +16,7 @@ from PyQt5.QtGui import QFont, QPixmap
 from PyQt5 import QtCore
 
 
-class Ventana_Album(QWidget):
+class VentanaAlbum(QWidget):
     """
     Clase de la ventana en dónde se muestra un album
     """

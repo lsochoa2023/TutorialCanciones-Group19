@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QScrollArea, QDialog, QWidget, QPushButton, QHBoxLay
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5 import QtCore
 
-class Ventana_Lista_Canciones(QWidget):
+class VentanaListaCanciones(QWidget):
     '''
     Clase de la ventana con la lista de las canciones
     '''
