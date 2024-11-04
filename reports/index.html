@@ -491,30 +491,54 @@ Licensed under the MIT license.
 
 	Canvas.prototype.removeText = function(layer, x, y, text, font, angle) {
         if (text == null) {
-                    var layerCache = this._textCache[layer];
-                if (layerCache != null) {    
+            this.deactivateAllText(layer);
+        } else {
+            this.deactivateSpecificText(layer, x, y, text, font, angle);
+        }
+    };
+    
+    // Helper function to deactivate all text in a layer
+    Canvas.prototype.deactivateAllText = function(layer) {
+        var layerCache = this._textCache[layer];
+        
+        if (layerCache == null) return;
+    
         for (var styleKey in layerCache) {
             if (hasOwnProperty.call(layerCache, styleKey)) {
                 var styleCache = layerCache[styleKey];
-                        for (var key in styleCache) {
-            if (hasOwnProperty.call(styleCache, key)) {
-                var positions = styleCache[key].positions;
-                        for (var i = 0, position; position = positions[i]; i++) {
-            position.active = false;
-        }
-    }
-						}
-					}
-				}
-			}
-		} else {
-        var positions = this.getTextInfo(layer, text, font, angle).positions;
-                for (var i = 0, position; position = positions[i]; i++) {
-            if (position.x == x && position.y == y) {
-                position.active = false;
-}
+                this.deactivatePositionsInStyleCache(styleCache);
             }
         }
+    };
+    
+    // Helper function to deactivate all positions within a style cache
+    Canvas.prototype.deactivatePositionsInStyleCache = function(styleCache) {
+        for (var key in styleCache) {
+            if (hasOwnProperty.call(styleCache, key)) {
+                var positions = styleCache[key].positions;
+                this.deactivatePositions(positions);
+            }
+        }
+    };
+    
+    // Helper function to set all positions to inactive
+    Canvas.prototype.deactivatePositions = function(positions) {
+        for (const position of positions) {
+            position.active = false;
+        }
+        
+    };
+    
+    // Helper function to deactivate specific text at a given position
+    Canvas.prototype.deactivateSpecificText = function(layer, x, y, text, font, angle) {
+        var positions = this.getTextInfo(layer, text, font, angle).positions;
+        
+        for (const position of positions) {
+            if (position.x === x && position.y === y) {
+                position.active = false;
+            }
+        }
+        
     };
 
 	///////////////////////////////////////////////////////////////////////////
