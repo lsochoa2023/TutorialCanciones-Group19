@@ -16,7 +16,7 @@ from PyQt5.QtGui import QFont, QPixmap
 from PyQt5 import QtCore
 
 
-class Ventana_Lista_Album(QWidget):
+class VentanaListaAlbum(QWidget):
     """
     Clase con la lista de albums
     """

@@ -14,7 +14,7 @@ from PyQt5.QtGui import QFont, QPixmap
 from PyQt5 import QtCore, Qt
 
 
-class Ventana_Inicial(QWidget):
+class VentanaInicial(QWidget):
 
     def __init__(self, interfaz):
         super().__init__()

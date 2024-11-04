@@ -17,7 +17,7 @@ from PyQt5.QtGui import QFont, QPixmap
 from PyQt5 import QtCore
 
 
-class Ventana_Cancion(QWidget):
+class VentanaCancion(QWidget):
     """
     Ventana que permite ver una canción
     """
