@@ -294,3 +294,28 @@ class Coleccion:
             .all()
         ]
         return interpretes
+
+    def buscar_interprete(self, buscar, interprete_nombre):
+        buscar = True
+        if buscar:
+            try:
+                interpretes = [
+                    elem.__dict__
+                    for elem in session.query(Interprete)
+                    .filter(Interprete.nombre.ilike("%{0}%".format(interprete_nombre)))
+                    .all()
+                ]
+            except Exception:
+                pass
+        return interpretes
+
+    def dar_interpretes_2(self):
+        dar = True
+        if dar:
+            try:
+                interpretes = [
+                    elem.__dict__ for elem in session.query(Interprete).all()
+                ]
+            except Exception:
+                pass
+        return interpretes
