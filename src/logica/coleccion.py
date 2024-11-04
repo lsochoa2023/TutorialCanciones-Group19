@@ -295,7 +295,7 @@ class Coleccion:
         ]
         return interpretes
 
-    def buscar_interprete(self, buscar, interprete_nombre):
+    def buscar_interprete(self, interprete_nombre):
         buscar = True
         if buscar:
             try:
