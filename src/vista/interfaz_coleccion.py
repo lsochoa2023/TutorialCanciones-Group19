@@ -105,7 +105,7 @@ class App(QApplication):
         """
         Método para editar una canción
         """
-        res = self.logica.editar_cancion(
+        self.logica.editar_cancion(
             nueva_cancion["id"],
             nueva_cancion["titulo"],
             nueva_cancion["minutos"],
