@@ -319,3 +319,30 @@ class Coleccion:
             except Exception:
                 pass
         return interpretes
+
+    def buscar_by_id(self, intreprete_id, interprete_nombre):
+        buscar = True
+        if buscar:
+            try:
+                interpretes = [
+                    elem.__dict__
+                    for elem in session.query(Interprete)
+                    .filter(Interprete.nombre.ilike("%{0}%".format(interprete_nombre)))
+                    .all()
+                ]
+            except Exception as e:
+                print(e)
+        return interpretes
+
+    def buscar_interprete_by_name(self, encontrar, interprete_nombre):
+        if encontrar:
+            try:
+                interpretes = [
+                    elem.__dict__
+                    for elem in session.query(Interprete)
+                    .filter(Interprete.nombre.ilike("%{0}%".format(interprete_nombre)))
+                    .all()
+                ]
+            except Exception:
+                pass
+        return interpretes
