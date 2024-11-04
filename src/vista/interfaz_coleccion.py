@@ -10,6 +10,8 @@ class App(QApplication):
     """
     Clase principal de la interfaz
     """
+    ERROR_ALGUARDAR_CANCION = "Error al guardar canción"   
+    ERROR_ALBUSCAR_ALBUM = "Error al buscar álbum"
 
     def __init__(self, sys_argv, logica):
         """
@@ -180,7 +182,7 @@ class App(QApplication):
         ):
             mensaje_error = QMessageBox()
             mensaje_error.setIcon(QMessageBox.Critical)
-            mensaje_error.setWindowTitle(ERROR_GUARDAR_CANCION)            
+            mensaje_error.setWindowTitle(ERROR_ALGUARDAR_CANCION)            
             mensaje_error.setText("Ningún campo debe estar vacio")
             mensaje_error.setStandardButtons(QMessageBox.Ok)
             mensaje_error.exec_()
@@ -191,7 +193,7 @@ class App(QApplication):
             ):
                 mensaje_error = QMessageBox()
                 mensaje_error.setIcon(QMessageBox.Critical)
-                mensaje_error.setWindowTitle("Error al guardar canción")
+                mensaje_error.setWindowTitle(ERROR_ALGUARDAR_CANCION)
                 mensaje_error.setText(
                     "La duración de la canción debe ser mínimo de 10 sg"
                 )
@@ -219,7 +221,7 @@ class App(QApplication):
                     if operacion is False:
                         mensaje_error = QMessageBox()
                         mensaje_error.setIcon(QMessageBox.Critical)
-                        mensaje_error.setWindowTitle("Error al guardar canción")
+                        mensaje_error.setWindowTitle(ERROR_ALGUARDAR_CANCION)
                         mensaje_error.setText(
                             "Ya existe una canción con el título "
                             + nueva_cancion["titulo"]
@@ -236,7 +238,7 @@ class App(QApplication):
         if len(albumes) == 0:            
             mensaje_error = QMessageBox()
             mensaje_error.setIcon(QMessageBox.Critical)
-            mensaje_error.setWindowTitle("Error al buscar álbum")
+            mensaje_error.setWindowTitle(ERROR_ALBUSCAR_ALBUM)
             mensaje_error.setText("No hay álbumes con el título " + nombre_album)
             mensaje_error.setStandardButtons(QMessageBox.Ok)
             mensaje_error.exec_()
@@ -250,7 +252,7 @@ class App(QApplication):
         if len(canciones) == 0:
             mensaje_error = QMessageBox()
             mensaje_error.setIcon(QMessageBox.Critical)
-            mensaje_error.setWindowTitle("Error al buscar álbum")
+            mensaje_error.setWindowTitle(ERROR_ALBUSCAR_ALBUM)
             mensaje_error.setText("No hay canciones con el título " + nombre_cancion)
             mensaje_error.setStandardButtons(QMessageBox.Ok)
             mensaje_error.exec_()
@@ -264,7 +266,7 @@ class App(QApplication):
         if len(interpretes) == 0:
             mensaje_error = QMessageBox()
             mensaje_error.setIcon(QMessageBox.Critical)
-            mensaje_error.setWindowTitle("Error al buscar álbum")
+            mensaje_error.setWindowTitle(ERROR_ALBUSCAR_ALBUM)
             mensaje_error.setText(
                 "No hay canciones con el interprete " + nombre_interprete
             )
